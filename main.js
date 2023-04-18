@@ -1,10 +1,16 @@
+import config from "./components/storage/config.js";
+config.storage();
+// console.log(localStorage.data);
+
+
+
 let input_color = document.querySelector(`[type='color']`);
 let input_rango = document.querySelector(`[type = 'range']`);
 let input_marca = document.querySelector(`[value='Mongol']`);
 let input_borrador = document.querySelector(`[value = 'true']`);
 let input_material = document.querySelector(`[value = 'Madera']`);
 
-let data = [];
+// let data = [];
 class lapiz {
     #marca
     constructor({
@@ -72,6 +78,7 @@ window.onload = ()=>{
     input_borrador.checked = true;
     input_material.checked = true;
 
+    
     // console.log(color);
 };
 
@@ -92,18 +99,40 @@ document.querySelector('#formulario').addEventListener('submit', (e)=>{
     Lapiz.setBorrador({borrador : `${borrador}`});
     Lapiz.setMaterial({material : `${material}`});
 
-    data.unshift(color, dimension, marca, borrador, material);
+    // console.log(storage.info);
+
+    // let data = [color, dimension, marca, borrador, material];
+    
+    
+    
+    /**
+     * !CULE ERROR CON EL STORAGE
+     */
+
+    let storage = JSON.parse(localStorage.getItem('data')); //trae la data del storage  
+    let newdata = storage.info.tabla.unshift(tabla);
+    // newdata.
+    newdata = JSON.stringify(storage.info);
+
+    console.log(newdata);  
+    // localStorage.setItem('data',nose);
+
+    /*
+    * Investigar por qué me alcamena toda la tabla, pero no en el local :')
+    
+     */
+    
     // data.unshift(formulario.color)
     document.querySelector('#tabla').insertAdjacentHTML('beforeend',`
-        <tr>
-            <th>${color}</th>
-            <th>${dimension}</th>
-            <th>${marca}</th>
+    <tr>
+    <th><input type="color" value="${color}"></th>
+    <th>${dimension}</th>
+    <th>${marca}</th>
             <th>${borrador}r</th>
             <th>${material}</th>
         </tr>
     `)
-    console.log(data);
+    // console.log(data);
 });
 
 
